@@ -1,0 +1,62 @@
+My brief travails in getting postgres to work on Ubuntu-base Linux Mint:
+
+>sudo apt-get install postgresql postgresql-contrib
+
+can enter in to the postgres prompt here:
+>sudo -u postgres psql postgres
+
+and in this prompt, can set a password:
+>\password postgres
+
+exiting to BASH, can create a postgres role after my linux role here:
+>sudo -u postgres createuser --superuser $USER
+
+exit, and then:
+>psql
+
+could log me into the postgres prompt
+If "user does not exist," then I don't have a postgres user linked to my Linux role
+If "database does not exist," then I don't have a database with the same name as my user
+
+can create a database after my user:
+>postgres createdb `whoami`
+
+which can be entered via
+>postgres
+
+or create a database with an arbitrary name
+>sudo -u postgres createdb arbitrarilynameddb
+
+which can be entered via
+>postgres arbitrarilynameddb
+
+can also change my prompt to serve my role as a postgres user via
+>sudo -u postgres -i
+
+The prompt prefix changes to this
+postgres@jason-ThinkPad-X61
+
+now, installing psycopg2 requires postgresql-server-dev-x.x where x.x is the version number. Get the version:
+>psql -V
+psql (PostgreSQL) 9.3.8
+
+and then use apt-get tab completion to help orient towards the correct package
+>sudo apt-get install postgresql-server-dev-9.3
+
+Cris recommended installing from pip, but my Python include files aren't in the standard place:
+/usr/include/
+
+They are actually here here:
+/usr/i486-linuxlibc5/include/
+
+As an aside, everything in this directory is libc5 related. The newer libc6/glibc standard library is now placed in /usr/include
+
+install psycopg2 using apt-get, per developer instructions:
+>sudo apt-get install python-psycopg2
+
+now make a virtual environment inheriting from 
+>mkvirtualenv --system-site-packages psycopg2
+
+now entering python and importing psycopg2 should work
+>python
+>import psycopg2

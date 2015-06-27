@@ -1,0 +1,21 @@
+Linking in Linked List
+
+For linked lists, each node contains a pointer to the next element. The linked list itself is registered via the header element, and the last node of the list needs to carry some kind of termination character.
+
+How to handle these pointer references in Python? We had two approaches that we considered:
+
+1. Use a nested object approach, where each object takes a reference to the instance of the node to its right. So if we have a list of a -> b -> c, then Node_a is instantiated by Node(value_a, Node_b), Node_b is instantiated by Node_b(value_b, Node_c), and Node_c is terminated by Node(value_c, None).
+
+2. Perhaps the more Pythonic approach is to register the Nodes as keys in a dictionary. This also registers all of the nodes to a known set and makes them perhaps easier to manage as sets and subsets; and also has the advantage of not having to instantiate a collection of node objects. So using our a -> b -> c problem case above:
+
+    Nodes = {
+        "node_a": (value_a, "node_b"),
+        "node_b": (value_b, "node_c"),
+        "node_c": (value_c, "node_c")
+    }
+
+We chose the nested object approach, mostly because it seemed to fit the specified problem-prompt a bit more cleanly. Probably fine as an educational exercise, even if it might be a more resource-intensive implementation approach.
+
+All of our classes were organized into a LinkedList class which included functions for representing the linked list: popping the head from the list, value based searching and returning of a node in the list, and value based deletion of the list. Along with a len like function. 
+
+If I were to do this in a more refined way, I might also choose to implement the abstract base class methods that match Python's MutableSequence.
